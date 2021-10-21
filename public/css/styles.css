@@ -1,0 +1,193 @@
+html, body {
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Georgia, Arial;
+    display: flex;
+    flex-direction: column;
+}
+header, footer {
+    flex: none;
+}
+
+.header {
+    position: relative;
+    background-color: #a73b3b;
+    color: white;
+    padding: 5px 20px;
+    height: 80px;
+}
+/* CSS for connection and logo */
+.connections {
+    margin: 0px;
+    height: 50px;
+    position: relative;
+}
+
+.connection-link {
+    display: block;
+    list-style: none;   
+    font-variant: small-caps;
+    font-weight: bold;
+    margin: 0;
+    position: absolute;
+    top: 30%;
+}
+
+.connection-linka {
+    color: black;
+    text-decoration: none; 
+    font-size: 20px;
+}
+
+.connection-linka:hover {
+    font-size: 150%;
+}
+/* CSS for header links */ 
+.header-links {
+    list-style: none;
+    display: inline;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-variant: small-caps;
+    font-weight: bold;
+}
+
+.header-linksa {
+    text-decoration: none;
+    font-size: 20px;
+    color: #ffffff;
+    padding-top: 10px;
+}
+
+.header-linksa:hover {
+    font-size: 150%;
+}
+
+.header-right {
+    list-style: none;
+    position:absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+main {
+    background-color: #F5F5F5;
+    flex: auto;
+}
+.main-paragraph {
+    text-align: center;
+    font-size: 20px;
+}
+
+footer {
+    height: 50px;
+}
+
+.footer-links {
+    display: inline;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-variant: small-caps;
+    font-weight: bold;
+}
+
+.footer-linksa {
+    text-decoration: none;
+    color: rgb(76, 76, 243);
+}
+
+/* Connections.html specific code */
+.connection1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.category {
+    list-style: none;
+    padding-left: 0;
+}
+
+.topic {
+    border-color: #000000;
+    border-width: 1px;
+    border-style: solid;
+    padding: 10px;
+    margin: 5px;
+    width: auto;
+}
+
+.topic:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+    rgba(240, 127, 127, 0.3) 0px 18px 36px -18px inset;
+}
+
+.connection-topic {
+    text-decoration: none;
+    color: black;
+}
+
+.title {
+    margin: 5px;
+}
+
+/* Connection specific CSS */
+.buttons {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+button {
+    margin: 10px;
+    font-size: 16px;
+    padding: 4px 20px;
+}
+
+.details {
+    max-width: 800px;
+    margin-top: 0px;
+}
+
+/* newConnection.html */
+.submission-form {
+    max-width: 500px;
+    margin: 2rem auto;
+    border: 2px solid blue;
+    padding: 2rem;
+}
+
+#create-connect {
+    border: 0;
+    background: blue;
+    padding: .5rem;
+    color: white;
+    width: auto;
+}
+
+#create-connect:hover {
+    cursor: pointer;
+    background-color: darkblue;
+}
+form {
+    display: table;
+}
+form div {
+    display: table-row;
+}
+
+form label {
+    display: table-cell;
+    width: 20%;
+}
+
+form input, textarea {
+    display: table-cell;
+    border-radius: 5px;
+    width: 100%;
+    padding: .5rem;
+    margin: 10px 20px 10px 0px;
+}

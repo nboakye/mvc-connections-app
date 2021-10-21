@@ -1,0 +1,28 @@
+<%- include('../partials/header.ejs')%>
+        <!-- Beginning of Main Content -->
+        <main>
+            <section class="connection1">
+                <h2><%= connection.title %></h2>
+                <img src="<%=connection.image %>" alt="" width="300" height="200">
+                <div class="buttons">
+                    <form>
+                        <button id="update" type="submit" formmethod="GET" formaction="/connections/<%= connection.id %>/edit">Update</button>
+                    </form>
+                    <form>
+                        <button id="delete" type="submit" formmethod="POST" formaction="/connections/<%= connection.id %>?_method=DELETE">Delete</button>
+                    </form>
+                </div>
+                <section>
+                    <h4>How to Attend</h4>
+                    <p>Host: <%= connection.host %></p>
+                    <p>Date: <%= connection.date %></p>
+                    <p>Time: <%= connection.start %> to <%= connection.end %></p>
+                    <p>Location: <%= connection.location %></p>
+                </section>
+                <h3>Details</h3>
+                <p class="details">
+                    <%= connection.details %> 
+                </p>
+            </section>
+        </main>
+        <%- include('../partials/footer.ejs')%>
