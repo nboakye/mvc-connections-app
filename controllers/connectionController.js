@@ -9,10 +9,16 @@ exports.new = (req, res) => {
     res.render('connection/newConnection');
 };
 
-exports.create = (req, res) => {
-    let connection = req.body;
-    model.add(connection);
-    res.redirect('/connections');
+exports.create = (req, res, next) => {
+    let connection = new model(req.body);  // create a new document
+    connection.save()     // insert document to db
+    .then(story => res.redirect('/connections'))
+    .catch(err=> {
+        if(err.name === 'ValidationError') {
+            err.status = 400;
+        }
+        next(err);
+    })
 };
 
 exports.show = (req, res, next) => {
