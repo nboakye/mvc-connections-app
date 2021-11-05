@@ -1,8 +1,9 @@
 const model = require('../models/connection');
 
-exports.index = (req, res) => {
-    let connections = model.findAll();
-    res.render('connection/connections', {connections});
+exports.index = (req, res, next) => {
+    model.find()
+    .then(connections=> res.render('connection/connections', {connections}))
+    .catch(err=> next(err))
 };
 
 exports.new = (req, res) => {
