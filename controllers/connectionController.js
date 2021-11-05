@@ -25,7 +25,7 @@ exports.create = (req, res, next) => {
 exports.show = (req, res, next) => {
     let id = req.params.id;
     if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error(id + 'is not a valid connection id');
+        let err = new Error(id + ' is not a valid connection id');
         err.status = 400;
         return next(err);
     }
@@ -45,7 +45,7 @@ exports.show = (req, res, next) => {
 exports.edit = (req, res, next) => {
     let id = req.params.id;
     if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error(id + 'is not a valid connection id');
+        let err = new Error(id + ' is not a valid connection id');
         err.status = 400;
         return next(err);
     }
@@ -67,7 +67,7 @@ exports.update = (req, res, next) => {
     let id = req.params.id;
 
     if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error(id + 'is not a valid connection id');
+        let err = new Error(id + ' is not a valid connection id');
         err.status = 400;
         return next(err);
     }
@@ -93,7 +93,7 @@ exports.delete = (req, res, next) => {
     let id = req.params.id;
 
     if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error(id + 'is not a valid connection id');
+        let err = new Error(id + ' is not a valid connection id');
         err.status = 400;
         return next(err);
     }
