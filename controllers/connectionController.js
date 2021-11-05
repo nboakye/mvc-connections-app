@@ -44,28 +44,49 @@ exports.show = (req, res, next) => {
 
 exports.edit = (req, res, next) => {
     let id = req.params.id;
-    let connection = model.findById(id);
-    if (connection) {
-        res.render('connection/edit', {connection});
+    if(!id.match(/^[0-9a-fA-F]{24}$/)) {
+        let err = new Error(id + 'is not a valid connection id');
+        err.status = 400;
+        return next(err);
     }
-    else {
-        let err = new Error('Cannot find a connection with id ' + id);
-        err.status = 404;
-        next(err);
-    }
+    model.findById(id)
+    .then(connection => {
+        if(connection) {
+            return res.render('connection/edit', {connection});
+        } else {
+            let err = new Error('Cannot find a connection with id ' + id);
+            err.status = 404;
+            next(err);
+        }
+    })
+    .catch(err=>next(err))
 };
 
 exports.update = (req, res, next) => {
     let connection = req.body;
     let id = req.params.id;
-    if (model.updateById(id, connection)) {
-        res.redirect('/connections/'+id);
+
+    if(!id.match(/^[0-9a-fA-F]{24}$/)) {
+        let err = new Error(id + 'is not a valid connection id');
+        err.status = 400;
+        return next(err);
     }
-    else {
-        let err = new Error('Cannot find a connection with id ' + id);
-        err.status = 404;
-        next(err);
-    }
+
+    model.findByIdAndUpdate(id, connection, {runValidators: true})
+    .then(connection => {
+        if(connection) {
+            res.redirect('/connections/'+id);
+        } else {
+            let err = new Error('Cannot find a connection with id ' + id);
+            err.status = 404;
+            next(err);
+        }
+    })
+    .catch(err=> {
+        if(err.name === 'ValidationError')
+            err.status = 400;
+        next(err)
+    });
 };
 
 exports.delete = (req, res, next) => {
