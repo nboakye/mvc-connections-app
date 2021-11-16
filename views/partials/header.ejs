@@ -28,3 +28,19 @@
                 <li class="connection-link"><a class="connection-linka" href="/connections">Connections</a></li>
             </ul>
         </header>
+
+       <% if(errorMessages.length > 0) {
+            errorMessages.forEach(message=> { %>
+                <div>
+                    <%=message %>
+                </div>
+          <%  });
+        } %>
+
+        <% if(successMessages.length > 0) {
+            successMessages.forEach(message=> { %>
+                <div>
+                    <%=message %>
+                </div>
+          <%  });
+        } %>

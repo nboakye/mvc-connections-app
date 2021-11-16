@@ -14,7 +14,7 @@ exports.create = (req, res, next) => {
 };
 
 exports.login = (req, res) => {
-    return res.render('./user/login');
+    res.render('./user/login');
 };
 
 exports.authenticate = (req, res) => {
@@ -32,14 +32,15 @@ exports.authenticate = (req, res) => {
                 if(result) {
                     // store user id in session
                     req.session.user = user._id;
+                    req.flash('success', 'You have successfully logged in');
                     res.redirect('./profile');
                 } else {
-                    console.log('wrong password');
+                    req.flash('error', 'Wrong password');
                     res.redirect('./login');
                 }
             })
         } else {
-            console.log('wrong email address');
+            req.flash('error', 'Wrong email address');
             res.redirect('./login');
         }
     })
