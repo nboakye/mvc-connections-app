@@ -14,11 +14,11 @@ exports.create = (req, res, next) => {
 };
 
 exports.login = (req, res) => {
-    res.render('./user/login');
+    return res.render('./user/login');
 };
 
 exports.authenticate = (req, res) => {
-    // authenticae
+    // authenticate
     let email = req.body.email;
     let password = req.body.password;
 
@@ -43,7 +43,7 @@ exports.authenticate = (req, res) => {
             res.redirect('./login');
         }
     })
-    .catch(err=>next(err));
+    .catch(err=>next(err)); 
 };
 
 exports.profile = (req, res, next) => {
