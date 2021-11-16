@@ -1,0 +1,37 @@
+.container {
+    max-width: 700px;
+    width: 100%;
+    padding: 25px 30px;
+    border-radius: 5px;
+    height: auto;
+    margin: 0 auto;
+    position: relative;
+}
+
+.container .title {
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.container form .user-inputs {
+}
+
+form .user-inputs .inputbox {
+    margin: 20px 0 12px 0;
+}
+
+.user-inputs .inputbox .form-label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+    width: auto;
+}
+
+.user-inputs .inputbox input {
+    height: 30px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    padding-left: 15px;
+    font-size: 16px;
+}

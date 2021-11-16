@@ -1,0 +1,33 @@
+<!--Credit to CodingLab for form CSS help: https://www.youtube.com/watch?v=U69WL9jInW0-->
+
+<%- include('../partials/header.ejs')%>
+<main class="form-container">
+    <div class="container">
+        <div class="title">Registration</div>
+        <form action="/users" method="POST">
+            <div class="user-inputs">
+                <div class="inputbox">
+                    <label class="form-label" for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+                </div>
+                <div class="inputbox">
+                    <label class="form-label" for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
+                </div>
+                <div class="inputbox">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="text" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="inputbox">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+            </div>
+            <div class="button">
+                <input type="submit" value="Register">
+            </div>
+        </form>
+    </div>
+</main>
+
+<%- include('../partials/footer.ejs')%>

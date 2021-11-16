@@ -3,8 +3,10 @@ const express = require('express');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
+const session = require('express-session');
 const connectionRoutes = require('./routes/connectionRoutes');
 const mainRoutes = require('./routes/mainRoutes');
+const userRoutes = require('./routes/userRoutes');
 const {initCollection} = require('./models/connection');
 
 // Create application
@@ -31,9 +33,11 @@ app.use(express.urlencoded({extended: true}));        // Parse data in request b
 app.use(morgan('tiny'));
 app.use(methodOverride('_method'));
 
+
 // Set up routes
 app.use('/', mainRoutes);
 app.use('/connections', connectionRoutes);
+app.use('/users', userRoutes);
 
 app.use((req, res, next) => {
     let err = new Error('The server cannot locate ' + req.url);
