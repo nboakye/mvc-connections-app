@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const connectionRoutes = require('./routes/connectionRoutes');
 const mainRoutes = require('./routes/mainRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -33,6 +34,19 @@ app.use(express.urlencoded({extended: true}));        // Parse data in request b
 app.use(morgan('tiny'));
 app.use(methodOverride('_method'));
 
+app.use(session({
+    secret: '1i2u291h8ni13409j1io34j023j',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {maxAge: 60*60*1000},
+    store: new MongoStore({mongoUrl: 'mongodb://localhost:27017/4166app'})   // default collection name is sessions
+}));
+
+
+app.use((req, res, next) => {
+    console.log(req.session);
+    next();
+})
 
 // Set up routes
 app.use('/', mainRoutes);

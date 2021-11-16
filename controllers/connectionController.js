@@ -12,6 +12,7 @@ exports.new = (req, res) => {
 
 exports.create = (req, res, next) => {
     let connection = new model(req.body);  // create a new document
+    connection.host = req.session.user;
     connection.save()     // insert document to db
     .then(connection => res.redirect('/connections'))
     .catch(err=> {
@@ -29,9 +30,10 @@ exports.show = (req, res, next) => {
         err.status = 400;
         return next(err);
     }
-    model.findById(id)
+    model.findById(id).populate('host', 'firstName lastName')
     .then(connection => {
         if(connection) {
+            console.log(connection);
             res.render('connection/connection', {connection});
         } else {
             let err = new Error('Cannot find a connection with id ' + id);
