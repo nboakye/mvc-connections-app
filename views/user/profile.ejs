@@ -1,12 +1,14 @@
 <%- include('../partials/header.ejs')%>
-<main>
+<main class="main-paragraph">
     <h2>Welcome, <%= user.firstName + " " + user.lastName%> </h2>
     <% if(connections.length) { %>
         <p>Here are your current connections</p>
+        <ul class="category">
         <%connections.forEach(connection => { %>
-            <a href='/connections/<%=connection.id%>'><p><%=connection.title%></p></a>
-       <% });
-    } else { %>
+            <li class="topic"><a class="connection-topic" href='/connections/<%=connection.id%>'><p><%=connection.title%></p></a></li>
+       <% }); %>
+        </ul>
+<%   } else { %>
         <p>You do not have any connections created</p>
   <%  } %>
 </main>

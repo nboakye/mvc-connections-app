@@ -17,7 +17,7 @@
                 <section>
                     <h4>How to Attend</h4>
                     <p>Host: <%= connection.host.firstName + ' ' + connection.host.lastName %></p>
-                    <p>Date: <%= connection.date %></p>
+                    <p>Date: <%= connection.date.toDateString() %></p>
                     <p>Time: <%= connection.start %> to <%= connection.end %></p>
                     <p>Location: <%= connection.location %></p>
                 </section>

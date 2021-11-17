@@ -156,13 +156,13 @@ button {
 .submission-form {
     max-width: 500px;
     margin: 2rem auto;
-    border: 2px solid blue;
     padding: 2rem;
 }
 
 #create-connect {
     border: 0;
-    background: blue;
+    background: rgb(195, 195, 228);
+    border-radius: 5px;
     padding: .5rem;
     color: white;
     width: auto;
