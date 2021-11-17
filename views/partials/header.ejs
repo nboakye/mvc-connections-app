@@ -17,9 +17,14 @@
                     <li class="header-links"><a href="/"><img src="/images/icons8-headphones-24.png" alt="Headphones" width="40" height="40"></a></li>
                     <li class="header-right">
                         <ul>
+                           <% if(!user) { %>
+                                <li class="header-links"><a class="header-linksa" href="/users/login">Login</a></li>
+                                <li class="header-links"><a class="header-linksa" href="/users/new">Sign up</a></li>
+                          <%  } else { %>
+                                <li class="header-links"><a class="header-linksa" href='/users/profile'>Profile</a></li>
+                                <li class="header-links"><a class="header-linksa" href='/users/logout'>Logout</a></li>
+                         <%   } %>
                             <li class="header-links"><a class="header-linksa" href="/connections/new">New Connection</a></li>
-                            <li class="header-links"><a class="header-linksa" href="/users/login">Login</a></li>
-                            <li class="header-links"><a class="header-linksa" href="/users/new">Sign up</a></li>
                         </ul>
                     </li>  
                 </ul>

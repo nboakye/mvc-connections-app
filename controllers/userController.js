@@ -44,7 +44,7 @@ exports.authenticate = (req, res) => {
                     // store user id in session
                     req.session.user = user._id;
                     req.flash('success', 'You have successfully logged in');
-                    res.redirect('./users/profile');
+                    res.redirect('./profile');
                 } else {
                     req.flash('error', 'Wrong password');
                     res.redirect('./users/login');
