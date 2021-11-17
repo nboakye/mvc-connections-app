@@ -31,7 +31,7 @@
 
        <% if(errorMessages.length > 0) {
             errorMessages.forEach(message=> { %>
-                <div>
+                <div class="error">
                     <%=message %>
                 </div>
           <%  });
@@ -39,7 +39,7 @@
 
         <% if(successMessages.length > 0) {
             successMessages.forEach(message=> { %>
-                <div>
+                <div class="success">
                     <%=message %>
                 </div>
           <%  });

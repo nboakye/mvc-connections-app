@@ -191,3 +191,20 @@ form input, textarea {
     padding: .5rem;
     margin: 10px 20px 10px 0px;
 }
+
+.success {
+    background-color: rgb(151, 228, 36);
+    width: 100%;
+    text-align: center;
+    padding: 10px 10px;
+    margin-top: 4px;
+}
+
+.error {
+    background-color: rgb(228, 72, 72);
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding: 10px 10px;
+    margin-top: 4px;
+}
