@@ -9,16 +9,16 @@ exports.new = (req, res) => {
 exports.create = (req, res, next) => {
     let user = new model(req.body);
     user.save()
-    .then(() => res.redirect('./login'))
+    .then(() => res.redirect('./users/login'))
     .catch(err=> {
         if(err.name === 'ValidationError') {
             req.flash('error', err.message);
-            return res.redirect('./users/new');
+            return res.redirect('./new');
         }
 
         if(err.code === 11000) {
             req.flash('error', 'Email address has been used');
-            return res.redirect('./users/new');
+            return res.redirect('./new');
         }
         next(err);
     });
@@ -43,11 +43,12 @@ exports.authenticate = (req, res) => {
                 if(result) {
                     // store user id in session
                     req.session.user = user._id;
+                    req.session.username = user.firstName;
                     req.flash('success', 'You have successfully logged in');
                     res.redirect('./profile');
                 } else {
                     req.flash('error', 'Wrong password');
-                    res.redirect('./users/login');
+                    res.redirect('./login');
                 }
             })
         } else {
