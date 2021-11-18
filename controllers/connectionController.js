@@ -1,4 +1,5 @@
 const model = require('../models/connection');
+const { DateTime } = require("luxon");
 
 exports.index = (req, res, next) => {
     model.find()
@@ -34,6 +35,9 @@ exports.show = (req, res, next) => {
     .then(connection => {
         if(connection) {
             console.log(connection);
+            connection.date = DateTime.fromISO(connection.date).toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY);
+            connection.start = DateTime.fromISO(connection.start).toLocaleString(DateTime.TIME_SIMPLE);
+            connection.end = DateTime.fromISO(connection.end).toLocaleString(DateTime.TIME_SIMPLE);
             res.render('connection/connection', {connection});
         } else {
             let err = new Error('Cannot find a connection with id ' + id);

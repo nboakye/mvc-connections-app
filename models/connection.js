@@ -7,7 +7,7 @@ const connectionSchema = new Schema( {
     category: {type: String, required: [true, 'category is required']},
     details: {type: String, required: [true, 'details is required'], 
     minLength: [10, 'details should be at least 10 characters']},
-    date: {type: Date, required: [true, 'date is required']},
+    date: {type: String, required: [true, 'date is required']},
     start: {type: String, required: [true, 'start time is required']},
     end: {type: String, required: [true, 'end time is required']},
     host: {type: Schema.Types.ObjectId, ref: 'User'},
