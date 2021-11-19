@@ -6,7 +6,7 @@ const connectionSchema = new Schema( {
     title: {type: String, required: [true, 'name is required']},
     category: {type: String, required: [true, 'category is required']},
     details: {type: String, required: [true, 'details is required'], 
-    minLength: [10, 'details should be at least 10 characters']},
+    minLength: [8, 'details should be at least 8 characters']},
     date: {type: String, required: [true, 'date is required']},
     start: {type: String, required: [true, 'start time is required']},
     end: {type: String, required: [true, 'end time is required']},

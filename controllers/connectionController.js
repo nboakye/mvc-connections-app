@@ -20,20 +20,16 @@ exports.create = (req, res, next) => {
         res.redirect('/connections');
     })
     .catch(err=> {
-        if(err.name === 'ValidationError') {
+       /* if(err.name === 'ValidationError') {
             err.status = 400;
-        }
-        next(err);
+        } */
+        req.flash('error', 'There was an error creating the connection. Please try again');
+        redirect('back');
     })
 };
 
 exports.show = (req, res, next) => {
     let id = req.params.id;
-    if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error(id + ' is not a valid connection id');
-        err.status = 400;
-        return next(err);
-    }
     model.findById(id).populate('host', 'firstName lastName')
     .then(connection => {
         if(connection) {
@@ -53,11 +49,6 @@ exports.show = (req, res, next) => {
 
 exports.edit = (req, res, next) => {
     let id = req.params.id;
-    if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error(id + ' is not a valid connection id');
-        err.status = 400;
-        return next(err);
-    }
     model.findById(id)
     .then(connection => {
         if(connection) {
@@ -68,18 +59,16 @@ exports.edit = (req, res, next) => {
             next(err);
         }
     })
-    .catch(err=>next(err))
+    .catch(err=> {
+        req.flash('error', 'There was an error creating the connection. Please try again');
+        redirect('back');
+        // next(err);
+    })
 };
 
 exports.update = (req, res, next) => {
     let connection = req.body;
     let id = req.params.id;
-
-    if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error(id + ' is not a valid connection id');
-        err.status = 400;
-        return next(err);
-    }
 
     model.findByIdAndUpdate(id, connection, {runValidators: true})
     .then(connection => {
@@ -100,13 +89,6 @@ exports.update = (req, res, next) => {
 
 exports.delete = (req, res, next) => {
     let id = req.params.id;
-
-    if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-        let err = new Error(id + ' is not a valid connection id');
-        err.status = 400;
-        return next(err);
-    }
-
     model.findByIdAndDelete(id)
     .then(connection => {
         if (connection) {
