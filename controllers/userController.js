@@ -1,6 +1,7 @@
 const model = require('../models/user');
 // const User = require('../models/user');
 const Connection = require('../models/connection');
+const { DateTime } = require("luxon");
 
 exports.new = (req, res) => {
     res.render('./user/new');
@@ -9,16 +10,19 @@ exports.new = (req, res) => {
 exports.create = (req, res, next) => {
     let user = new model(req.body);
     user.save()
-    .then(() => res.redirect('./users/login'))
+    .then(() => {
+        req.flash('success', 'You have successfully created an account!');
+        res.redirect('./users/login');
+    })
     .catch(err=> {
         if(err.name === 'ValidationError') {
             req.flash('error', err.message);
-            return res.redirect('./new');
+            return res.redirect('/users/new');
         }
 
         if(err.code === 11000) {
             req.flash('error', 'Email address has been used');
-            return res.redirect('./new');
+            return res.redirect('/users/new');
         }
         next(err);
     });
@@ -64,7 +68,7 @@ exports.profile = (req, res, next) => {
     Promise.all([model.findById(id), Connection.find({host: id})])
     .then(results => {
         const [user, connections] = results;
-        res.render('./user/profile', {user, connections});
+        res.render('./user/profile', {user, connections, DateTime});
     })
     .catch(err=>next(err))
 };
@@ -74,6 +78,7 @@ exports.logout = (req, res, next) => {
         if(err)
             return next(err);
         else
-            res.redirect('/');
+            req.flash('success', 'You are now logged out.');
+            res.redirect('./login');
     })
 }

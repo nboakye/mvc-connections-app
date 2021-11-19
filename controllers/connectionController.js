@@ -15,7 +15,10 @@ exports.create = (req, res, next) => {
     let connection = new model(req.body);  // create a new document
     connection.host = req.session.user;
     connection.save()     // insert document to db
-    .then(connection => res.redirect('/connections'))
+    .then(connection => {
+        req.flash('success', 'Connection was created!');
+        res.redirect('/connections');
+    })
     .catch(err=> {
         if(err.name === 'ValidationError') {
             err.status = 400;
