@@ -78,7 +78,6 @@ exports.logout = (req, res, next) => {
         if(err)
             return next(err);
         else
-            req.flash('success', 'You are now logged out.');
             res.redirect('./login');
     })
 }
