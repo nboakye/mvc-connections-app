@@ -2,6 +2,7 @@ const model = require('../models/user');
 // const User = require('../models/user');
 const Connection = require('../models/connection');
 const { DateTime } = require("luxon");
+const rsvpModel = require('../models/rsvp');
 
 exports.new = (req, res) => {
     res.render('./user/new');
@@ -65,10 +66,10 @@ exports.authenticate = (req, res) => {
 
 exports.profile = (req, res, next) => {
     let id = req.session.user;
-    Promise.all([model.findById(id), Connection.find({host: id})])
+    Promise.all([model.findById(id), Connection.find({host: id}), rsvpModel.find({user:id}).populate('connection', 'title category')])
     .then(results => {
-        const [user, connections] = results;
-        res.render('./user/profile', {user, connections, DateTime});
+        const [user, connections, reservations] = results;
+        res.render('./user/profile', {user, connections, DateTime, reservations});
     })
     .catch(err=>next(err))
 };

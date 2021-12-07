@@ -13,7 +13,18 @@
                             <button id="delete" type="submit" formmethod="POST" formaction="/connections/<%= connection.id %>?_method=DELETE">Delete</button>
                         </form>
                     </div>
-             <%   }   %>
+                <%   }   
+                  else if (user && user != connection.host._id) { %>
+                    <div class="rsvp">
+                        <h3>RSVP</h3>
+                        <h2><% rsvps.length %> people are going!</h2>
+                        <form>
+                            <button id="yes" type="submit" formmethod="POST" name="rsvp" value="YES" formaction="/connections/<%= connection.id %>/rsvp">Yes</button>
+                            <button id="no" type="submit" formmethod="POST" name="rsvp" value="NO" formaction="/connections/<%= connection.id %>/rsvp">No</button>
+                            <button id="maybe" type="submit" formmethod="POST" name="rsvp" value="MAYBE" formaction="/connections/<%= connection.id %>/rsvp">Maybe</button>
+                        </form>
+                    </div>
+               <%  } %>
                 <section>
                     <h4>How to Attend</h4>
                     <p>Host: <%= connection.host.firstName + ' ' + connection.host.lastName %></p>

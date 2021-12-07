@@ -37,3 +37,21 @@ exports.isHost = (req, res, next) => {
     })  
     .catch(err=>next(err));
 };
+
+// check if user is host
+exports.isNotHost = (req, res, next) => {
+    let id = req.params.id;
+    Connection.findById(id)
+    .then(connection=> {
+        if(connection) {
+            if(connection.host != req.session.user) {
+                return next();
+            } else {
+                let err = new Error('Unauthorized access to the resource');
+                err.status = 401;
+                return next(err);
+            }
+        }
+    })  
+    .catch(err=>next(err));
+};

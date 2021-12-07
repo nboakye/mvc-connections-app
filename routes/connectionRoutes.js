@@ -1,6 +1,6 @@
 const express = require('express');
 const controller = require('../controllers/connectionController');
-const {isLoggedIn, isHost} = require('../middlewares/auth')
+const {isLoggedIn, isHost, isNotHost} = require('../middlewares/auth')
 const { validateId } = require('../middlewares/validator');
 
 const router = express.Router();
@@ -25,5 +25,11 @@ router.put('/:id', isLoggedIn, isHost, validateId, controller.update);
 
 //DELETE /connections/:id: delete the connection
 router.delete('/:id', isLoggedIn, isHost, validateId, controller.delete);
+
+// POST for creating and updating RSVP
+router.post('/:id/rsvp', validateId, isLoggedIn, isNotHost, controller.rsvpEdit);
+
+// DELETE for deleting rsvp
+router.delete('/:id/rsvp', validateId, isLoggedIn, controller.rsvpDelete);
 
 module.exports = router;

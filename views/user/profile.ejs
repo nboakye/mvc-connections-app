@@ -24,5 +24,31 @@
 <%   } else { %>
         <p>You do not have any connections created</p>
   <%  } %>
+
+  <% if(reservations.length) { %>
+    <p>Here are your current RSVPS</p>
+    <table>
+        <tr>
+            <th>Connection</th>
+            <th>Category</th>
+            <th>Going?</th>
+            <th>Actions</th>
+        </tr>
+        <%reservations.forEach(rsvp => { %>
+            <tr>
+                <td><a class="connection-topic" href='/connections/<%=rsvp.connection._id%>'><%=rsvp.connection.title%></a></td>
+                <td><a class="connection-topic" href='/connections/<%=rsvp.connection._id%>'><%=rsvp.connection.category%></a></td>
+                <td><%=rsvp.status %></td>
+                <form>
+                    <td><button id="update" formmethod="GET" formaction="/connections/<%= rsvp.connection._id %>">Edit</button> 
+                        <button id="delete" formmethod="POST" formaction="/connections/<%= rsvp.connection._id %>/rsvp?_method=DELETE">Delete</button></td>
+                </form>
+            </tr>
+            
+        <% }); %>
+    </table>
+<%   } else { %>
+    <p>You do not have any reservations</p>
+<%  } %>
 </main>
 <%- include('../partials/footer.ejs')%>

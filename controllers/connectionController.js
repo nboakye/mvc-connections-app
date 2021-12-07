@@ -1,5 +1,6 @@
 const model = require('../models/connection');
 const { DateTime } = require("luxon");
+const rsvpModel = require('../models/rsvp');
 
 exports.index = (req, res, next) => {
     model.find()
@@ -101,3 +102,52 @@ exports.delete = (req, res, next) => {
     })
     .catch(err=>next(err))
 };
+
+exports.rsvpEdit = (req, res, next) => {
+    console.log(req.body.rsvp);
+    let id = req.params.id;
+    rsvpModel.findOne({connection:id})
+    .then(rsvp => {
+        if (rsvp) {
+            rsvpModel.findByIdAndUpdate(rsvp._id, {status: req.body.rsvp}, {useFindAndModify: false, runValidators: true})
+            .then(rsvp => {
+                req.flash('success', 'Updated RSVP');
+                res.redirect('/users/profile');
+            })
+            .catch(err=> {
+                if (err.name === 'ValidationError') {
+                    req.flash('error', err.message);
+                    return res.redirect('/back');
+                }
+                next(err);
+            });
+        } else {
+            let rsvp = new rsvpModel({
+                connection: id,
+                status: req.body.rsvp,
+                user: req.session.user
+            });
+            rsvp.save()
+            .then(rsvp => {
+                res.redirect('/users/profile');
+            })
+            .catch(err=> {
+                req.flash('error', err.message);
+                next(err)
+            });
+        }
+    })
+}
+
+exports.rsvpDelete = (req, res, next) => {
+    let id = req.params.id;
+    rsvpModel.findOneAndDelete({connection:id, user:req.session.user})
+    .then(rsvp => {
+        req.flash('success', 'Successfully deleted RSVP');
+        res.redirect('/users/profile');
+    })
+    .catch(err=> {
+        req.flash('error', err.message);
+        next(err);
+    });
+}
