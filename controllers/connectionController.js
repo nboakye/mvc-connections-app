@@ -31,14 +31,15 @@ exports.create = (req, res, next) => {
 
 exports.show = (req, res, next) => {
     let id = req.params.id;
-    model.findById(id).populate('host', 'firstName lastName')
-    .then(connection => {
+    Promise.all([model.findById(id).populate('host', 'firstName lastName'), rsvpModel.find({connection:id, status:"YES"})])
+    .then(results => {
+        const [connection, rsvps] = results;
         if(connection) {
             console.log(connection);
             connection.date = DateTime.fromISO(connection.date).toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY);
             connection.start = DateTime.fromISO(connection.start).toLocaleString(DateTime.TIME_SIMPLE);
             connection.end = DateTime.fromISO(connection.end).toLocaleString(DateTime.TIME_SIMPLE);
-            res.render('connection/connection', {connection});
+            res.render('connection/connection', {connection, rsvps});
         } else {
             let err = new Error('Cannot find a connection with id ' + id);
             err.status = 404;

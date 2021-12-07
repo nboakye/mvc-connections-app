@@ -17,7 +17,9 @@
                   else if (user && user != connection.host._id) { %>
                     <div class="rsvp">
                         <h3>RSVP</h3>
-                        <h2><% rsvps.length %> people are going!</h2>
+                        <% if(rsvps) { %>
+                            <h4><%=Object.keys(rsvps).length %> people are going!</h4>
+                     <%   } %>
                         <form>
                             <button id="yes" type="submit" formmethod="POST" name="rsvp" value="YES" formaction="/connections/<%= connection.id %>/rsvp">Yes</button>
                             <button id="no" type="submit" formmethod="POST" name="rsvp" value="NO" formaction="/connections/<%= connection.id %>/rsvp">No</button>
