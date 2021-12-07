@@ -69,6 +69,7 @@ exports.profile = (req, res, next) => {
     Promise.all([model.findById(id), Connection.find({host: id}), rsvpModel.find({user:id}).populate('connection', 'title category')])
     .then(results => {
         const [user, connections, reservations] = results;
+        console.log(reservations);
         res.render('./user/profile', {user, connections, DateTime, reservations});
     })
     .catch(err=>next(err))

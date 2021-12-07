@@ -91,9 +91,10 @@ exports.update = (req, res, next) => {
 
 exports.delete = (req, res, next) => {
     let id = req.params.id;
-    model.findByIdAndDelete(id)
+    Promise.all(model.findByIdAndDelete(id), rsvpModel.deleteMany({connection:id})
     .then(connection => {
         if (connection) {
+            req.flash('success', 'Successfully deleted the connection')
             res.redirect('/connections');
         } else {
             let err = new Error('Cannot find a connection with id ' + id);
@@ -102,12 +103,13 @@ exports.delete = (req, res, next) => {
         }
     })
     .catch(err=>next(err))
-};
+)};
 
 exports.rsvpEdit = (req, res, next) => {
     console.log(req.body.rsvp);
     let id = req.params.id;
-    rsvpModel.findOne({connection:id})
+    // remove user:req.session.user if not needed
+    rsvpModel.findOne({connection:id, user:req.session.user})
     .then(rsvp => {
         if (rsvp) {
             rsvpModel.findByIdAndUpdate(rsvp._id, {status: req.body.rsvp}, {useFindAndModify: false, runValidators: true})
