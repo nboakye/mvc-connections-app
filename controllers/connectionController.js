@@ -25,7 +25,7 @@ exports.create = (req, res, next) => {
             err.status = 400;
         } */
         req.flash('error', 'There was an error creating the connection. Please try again');
-        redirect('back');
+        res.redirect('back');
     })
 };
 
@@ -114,7 +114,7 @@ exports.rsvpEdit = (req, res, next) => {
         if (rsvp) {
             rsvpModel.findByIdAndUpdate(rsvp._id, {status: req.body.rsvp}, {useFindAndModify: false, runValidators: true})
             .then(rsvp => {
-                req.flash('success', 'Updated RSVP');
+                req.flash('success', 'Successfully updated your RSVP for this connection!');
                 res.redirect('/users/profile');
             })
             .catch(err=> {
@@ -132,11 +132,12 @@ exports.rsvpEdit = (req, res, next) => {
             });
             rsvp.save()
             .then(rsvp => {
+                req.flash('success', 'Successfully created an RSVP for this connection!');
                 res.redirect('/users/profile');
             })
             .catch(err=> {
                 req.flash('error', err.message);
-                next(err)
+                res.redirect('/');
             });
         }
     })

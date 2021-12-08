@@ -5,6 +5,9 @@
                 <h2><%= connection.title %></h2>
                 <img src="<%=connection.image %>" alt="" width="300" height="200">
                <% if (user == connection.host._id) { %>
+                    <% if(rsvps) { %>
+                        <h4><%=Object.keys(rsvps).length %> people are going!</h4>
+                <%   } %>
                     <div class="buttons">
                         <form>
                             <button id="update" type="submit" formmethod="GET" formaction="/connections/<%= connection.id %>/edit">Update</button>
