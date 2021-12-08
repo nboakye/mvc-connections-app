@@ -1,4 +1,5 @@
 const express = require('express');
+const {body} = require('express-validator');
 const controller = require('../controllers/userController');
 const {isGuest, isLoggedIn} = require('../middlewares/auth');
 
@@ -14,7 +15,10 @@ router.post('/', isGuest, controller.create);
 router.get('/login', isGuest, controller.login);
 
 // POST to login
-router.post('/login', isGuest, controller.authenticate);
+router.post('/login', 
+[body('email', 'Email must be a valid email address').isEmail().trim().escape().normalizeEmail(),
+body('password', 'Password must be at least 8 characters and at most 64 characters').isLength({min: 8, max:64})],
+isGuest, controller.authenticate);
 
 // GET to view profile page
 router.get('/profile', isLoggedIn, controller.profile);

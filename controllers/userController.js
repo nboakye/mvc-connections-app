@@ -1,5 +1,6 @@
 const model = require('../models/user');
 // const User = require('../models/user');
+const {validationResult} = require('express-validator');
 const Connection = require('../models/connection');
 const { DateTime } = require("luxon");
 const rsvpModel = require('../models/rsvp');
@@ -34,6 +35,13 @@ exports.login = (req, res) => {
 };
 
 exports.authenticate = (req, res) => {
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        errors.array().forEach(error => {
+            req.flash('error', error.msg);
+        });
+        return res.redirect('back');
+    }
     // authenticate
     let email = req.body.email;
     let password = req.body.password;
