@@ -11,6 +11,9 @@ exports.new = (req, res) => {
 
 exports.create = (req, res, next) => {
     let user = new model(req.body);
+    if (user.email) {
+        user.email = user.email.toLowerCase();
+    }
     user.save()
     .then(() => {
         req.flash('success', 'You have successfully created an account!');
@@ -35,6 +38,10 @@ exports.login = (req, res) => {
 };
 
 exports.authenticate = (req, res) => {
+    let email = req.body.email;
+    if(email) {
+        email = email.toLowerCase();
+    }
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
         errors.array().forEach(error => {
@@ -43,7 +50,6 @@ exports.authenticate = (req, res) => {
         return res.redirect('back');
     }
     // authenticate
-    let email = req.body.email;
     let password = req.body.password;
 
     // query database with mongoose
