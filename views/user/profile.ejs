@@ -3,7 +3,7 @@
     <h2>Welcome, <%= user.firstName + " " + user.lastName%> </h2>
     <% if(connections.length) { %>
         <p>Here are your current connections</p>
-        <table>
+        <table class="table table-striped table-bordered">
             <tr>
                 <th>Connection</th>
                 <th>Date</th>
@@ -27,7 +27,7 @@
 
   <% if(reservations.length) { %>
     <p>Here are your current RSVPS</p>
-    <table>
+    <table class="table table-striped table-bordered">
         <tr>
             <th>Connection</th>
             <th>Category</th>

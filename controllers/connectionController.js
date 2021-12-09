@@ -1,6 +1,7 @@
 const model = require('../models/connection');
 const { DateTime } = require("luxon");
 const rsvpModel = require('../models/rsvp');
+const {validationResult} = require('express-validator');
 
 exports.index = (req, res, next) => {
     model.find()
@@ -14,6 +15,13 @@ exports.new = (req, res) => {
 
 exports.create = (req, res, next) => {
     let connection = new model(req.body);  // create a new document
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        errors.array().forEach(error => {
+            req.flash('error', error.msg);
+        });
+        return res.redirect('back');
+    }
     connection.host = req.session.user;
     connection.save()     // insert document to db
     .then(connection => {
@@ -51,6 +59,13 @@ exports.show = (req, res, next) => {
 
 exports.edit = (req, res, next) => {
     let id = req.params.id;
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        errors.array().forEach(error => {
+            req.flash('error', error.msg);
+        });
+        return res.redirect('back');
+    }
     model.findById(id)
     .then(connection => {
         if(connection) {
@@ -91,7 +106,7 @@ exports.update = (req, res, next) => {
 
 exports.delete = (req, res, next) => {
     let id = req.params.id;
-    Promise.all(model.findByIdAndDelete(id), rsvpModel.deleteMany({connection:id})
+    Promise.all([model.findByIdAndDelete(id, {useFindAndModify: false}), rsvpModel.deleteMany({connection:id})])
     .then(connection => {
         if (connection) {
             req.flash('success', 'Successfully deleted the connection')
@@ -103,7 +118,7 @@ exports.delete = (req, res, next) => {
         }
     })
     .catch(err=>next(err))
-)};
+};
 
 exports.rsvpEdit = (req, res, next) => {
     console.log(req.body.rsvp);

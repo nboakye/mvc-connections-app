@@ -1,6 +1,6 @@
 const rateLimit = require('express-rate-limit');
 
-express.logInLimiter = rateLimit({
+exports.logInLimiter = rateLimit({
     windowMs: 60 * 1000,
     max: 5,
     //message: 'That was too many log in requests. Try again later.'
